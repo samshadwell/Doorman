@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module DoormanBot
-  GUESTS_DIRECTORY = 'guest-lists'
+  GUESTS_DIRECTORY = 'app/guest-lists'
 end
