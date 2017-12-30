@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source ./.env
-SLACK_API_TOKEN=${SLACK_API_TOKEN} bundle exec ruby ./app/app.rb
+SLACK_API_TOKEN=${SLACK_API_TOKEN} bundle exec ruby ./doorman-bot.rb
