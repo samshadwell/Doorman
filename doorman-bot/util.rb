@@ -12,6 +12,9 @@ module DoormanBot
     # @channels is a hash mapping channel names to their IDs
     attr_reader :channels
 
+    INHERIT_KEY = 'inherit-from'
+    INCLUDE_KEY = 'include-channels'
+
     def initialize
       # refresh_channels!
     end
@@ -69,9 +72,6 @@ module DoormanBot
     end
 
     private
-
-    INHERIT_KEY = 'inherit-from'
-    INCLUDE_KEY = 'include-channels'
 
     def parse_guest_list(list_name)
       filename = "#{DoormanBot::GUESTS_DIRECTORY}/#{list_name}.yml"
