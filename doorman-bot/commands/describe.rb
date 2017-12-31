@@ -4,6 +4,7 @@ module DoormanBot
   module Commands
     # List command, fetches all groups known groups and sends to user.
     class Describe < SlackRubyBot::Commands::Base
+      # TODO: MVC-ify this. All this text logic should be in a view.
       MISSING_LIST_RESPONSE =
         "I'm sorry, you need to provide a guest list to describe. For more " \
         'information try `doorman help describe`'
