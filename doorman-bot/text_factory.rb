@@ -12,14 +12,12 @@ module DoormanBot
       bulleted_list('Here are all the guest lists I am aware of:', lists)
     end
 
-    class << self
-      private
-
-      def bulleted_list(first_line, to_list)
-        response_lines = [first_line]
-        response_lines += to_list.map { |l| DoormanBot::LIST_LINE_BEGIN + l }
-        response_lines.join("\n")
-      end
+    def self.bulleted_list(first_line, to_list)
+      response_lines = [first_line]
+      response_lines += to_list.map { |l| DoormanBot::LIST_LINE_BEGIN + l }
+      response_lines.join("\n")
     end
+
+    private_class_method :bulleted_list
   end
 end
