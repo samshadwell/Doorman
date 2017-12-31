@@ -41,15 +41,15 @@ module DoormanBot
       @channels = name_to_id.freeze
     end
 
-      # Given the name of some guest list, returns a list of channel IDs that are
+    # Given the name of some guest list, returns a list of channel IDs that are
     # included by that guest list.
     def get_target_ids(list_name)
       names = get_target_names(list_name)
       translate_names_to_ids(names)
     end
 
-    # Given the name of some guest list, returns a list of channel names that are
-    # included by that guest list.
+    # Given the name of some guest list, returns a list of channel names that
+    # are included by that guest list.
     def get_target_names(list_name)
       explored = Set.new
       to_do = [list_name]
@@ -74,18 +74,16 @@ module DoormanBot
     INCLUDE_KEY = 'include-channels'
 
     def parse_guest_list(list_name)
-      parsed = YAML.load_file("#{DoormanBot::GUESTS_DIRECTORY}/#{list_name}.yml")
+      filename = "#{DoormanBot::GUESTS_DIRECTORY}/#{list_name}.yml"
       {
         INHERIT_KEY => [],
         INCLUDE_KEY => [],
-      }.merge(parsed)
+      }.merge(YAML.load_file(filename))
     end
 
     def translate_names_to_ids(channel_names)
       channel_names.map do |name|
-        unless channels.has_key?(name)
-          refresh_channels!
-        end
+        refresh_channels! unless channels.key?(name)
         channels.fetch(name)
       end
     end
