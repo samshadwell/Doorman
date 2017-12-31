@@ -8,6 +8,7 @@ gem 'celluloid-io'
 gem 'slack-ruby-bot'
 
 group :development, :test do
+  gem 'pry'
   gem 'rack-test'
   gem 'rspec'
   gem 'vcr'
