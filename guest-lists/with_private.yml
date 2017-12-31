@@ -1,0 +1,4 @@
+include-channels:
+ - test1
+inherit-from:
+ - example
