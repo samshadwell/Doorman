@@ -68,7 +68,7 @@ module DoormanBot
           to_do << other_list unless explored.member?(other_list)
         end
       end
-      channel_names
+      channel_names.sort
     end
 
     private

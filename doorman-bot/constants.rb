@@ -2,4 +2,5 @@
 
 module DoormanBot
   GUESTS_DIRECTORY = 'guest-lists'
+  LIST_LINE_BEGIN = ' • '
 end
