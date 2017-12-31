@@ -16,7 +16,7 @@ module DoormanBot
     INCLUDE_KEY = 'include-channels'
 
     def initialize
-      # refresh_channels!
+      refresh_channels!
     end
 
     def guest_lists
@@ -54,21 +54,21 @@ module DoormanBot
     # Given the name of some guest list, returns a list of channel names that
     # are included by that guest list.
     def get_target_names(list_name)
+      channel_names = Set.new
       explored = Set.new
       to_do = [list_name]
 
-      channel_names = []
       until to_do.empty?
         work = to_do.pop
-        explored << work
+        next if explored.member?(work)
 
-        guest_list = parse_guest_list(list_name)
-        channel_names += guest_list[INCLUDE_KEY]
-        guest_list[INHERIT_KEY].each do |other_list|
-          to_do << other_list unless explored.member?(other_list)
-        end
+        guest_list = parse_guest_list(work)
+        channel_names.merge guest_list[INCLUDE_KEY]
+        to_do += guest_list[INHERIT_KEY]
+
+        explored.add work
       end
-      channel_names.sort
+      channel_names.to_a.sort
     end
 
     private
