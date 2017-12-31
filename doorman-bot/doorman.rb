@@ -3,6 +3,7 @@
 module DoormanBot
   # Base SlackBot.
   class Doorman < SlackRubyBot::Bot
+    #TODO: override default help to reply in-thread.
     help do
       title 'Doorman'
       desc 'Simplifies multi-channel invitations.'
