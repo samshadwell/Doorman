@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require 'set'
 require 'singleton'
+require 'yaml'
 
 module DoormanBot
   # Utility class which encompasses most of the command-agnostic logic.
@@ -11,7 +13,7 @@ module DoormanBot
     attr_reader :channels
 
     def initialize
-      refresh_channels!
+      # refresh_channels!
     end
 
     def guest_lists
@@ -28,7 +30,7 @@ module DoormanBot
     # groups (private channels) to minimize the number of times we fetch these
     # from Slack.
     def refresh_channels!
-      client = Slack::Web::Client.new
+      client = ::Slack::Web::Client.new
       all_channels = client.channels_list.channels
       all_channels += client.groups_list.groups
       name_to_id = {}
@@ -37,6 +39,55 @@ module DoormanBot
       end
 
       @channels = name_to_id.freeze
+    end
+
+      # Given the name of some guest list, returns a list of channel IDs that are
+    # included by that guest list.
+    def get_target_ids(list_name)
+      names = get_target_names(list_name)
+      translate_names_to_ids(names)
+    end
+
+    # Given the name of some guest list, returns a list of channel names that are
+    # included by that guest list.
+    def get_target_names(list_name)
+      explored = Set.new
+      to_do = [list_name]
+
+      channel_names = []
+      until to_do.empty?
+        work = to_do.pop
+        explored << work
+
+        guest_list = parse_guest_list(list_name)
+        channel_names += guest_list[INCLUDE_KEY]
+        guest_list[INHERIT_KEY].each do |other_list|
+          to_do << other_list unless explored.member?(other_list)
+        end
+      end
+      channel_names
+    end
+
+    private
+
+    INHERIT_KEY = 'inherit-from'
+    INCLUDE_KEY = 'include-channels'
+
+    def parse_guest_list(list_name)
+      parsed = YAML.load_file("#{DoormanBot::GUESTS_DIRECTORY}/#{list_name}.yml")
+      {
+        INHERIT_KEY => [],
+        INCLUDE_KEY => [],
+      }.merge(parsed)
+    end
+
+    def translate_names_to_ids(channel_names)
+      channel_names.map do |name|
+        unless channels.has_key?(name)
+          refresh_channels!
+        end
+        channels.fetch(name)
+      end
     end
   end
 end

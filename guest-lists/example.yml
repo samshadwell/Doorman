@@ -1,6 +1,3 @@
-inherit-from:
- - list1
- - list2
 include-channels:
- - me
- - you
+ - general
+ - random
