@@ -11,6 +11,7 @@ group :development, :test do
   gem 'pry'
   gem 'rack-test'
   gem 'rspec'
+  gem 'rubocop'
   gem 'vcr'
   gem 'webmock'
 end
