@@ -2,6 +2,9 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ClassLength:
+  Enabled: false
+
 Metrics/MethodLength:
   CountComments: false
   Max: 15
