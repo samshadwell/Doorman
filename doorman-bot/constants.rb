@@ -13,4 +13,8 @@ module DoormanBot
 
   INVALID_LIST_RESPONSE =
     "It looks like the list you're trying to describe doesn't exist."
+
+  INVALID_USER_RESPONSE =
+    "I'm sorry, that doesn't appear to be a valid user. Be sure to tag them " \
+    "in your message."
 end

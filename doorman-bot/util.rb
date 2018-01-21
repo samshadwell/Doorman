@@ -108,7 +108,7 @@ module DoormanBot
     # Sends an invitation to the given channel. If successful returns true,
     # otherwise returns false.
     def invite(user, channel)
-      status = client.channels_invite(channel: channel, user: user)
+      status = @client.channels_invite(channel: channel, user: user)
       status.ok
     end
 

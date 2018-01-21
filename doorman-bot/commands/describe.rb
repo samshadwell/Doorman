@@ -4,7 +4,7 @@ module DoormanBot
   module Commands
     # List command, fetches all groups known groups and sends to user.
     class Describe < SlackRubyBot::Commands::Base
-      match(/^(?<bot>\w*)\sdescribe(\s(?<list>\w*))?/) do |client, data, match|
+      match(/^(?<bot>\w*)\sdescribe(\s(?<list>\S*))?/) do |client, data, match|
         response_text = nil
         if match['list'].nil?
           response_text = DoormanBot::MISSING_LIST_RESPONSE
